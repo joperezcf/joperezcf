@@ -1,0 +1,25 @@
+name: Metrics
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  isocalendar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          # Classic token with no scopes: reads the public contribution calendar,
+          # which includes private counts when "Include private contributions" is on.
+          token: ${{ secrets.METRICS_TOKEN }}
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
+          filename: assets/metrics.isocalendar.svg
+          base: ""
+          config_timezone: America/New_York
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
